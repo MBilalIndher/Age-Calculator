@@ -1,0 +1,33 @@
+from datetime import datetime
+
+# Function to calculate the exact age
+def calculate_age(birthdate):
+    today = datetime.today()
+    
+    # Calculate the difference in years, months, and days
+    years = today.year - birthdate.year
+    months = today.month - birthdate.month
+    days = today.day - birthdate.day
+
+    # Adjust for negative values (e.g., if the month/day hasn't passed yet)
+    if days < 0:
+        months -= 1
+        days += (today.replace(year=today.year, month=today.month-1) - birthdate).days
+
+    if months < 0:
+        years -= 1
+        months += 12
+
+    return years, months, days
+
+# Input: Ask the user to enter their birthdate (format: YYYY-MM-DD)
+birthdate_input = input("Enter your birthdate (YYYY-MM-DD): ")
+
+# Convert the input string to a datetime object
+birthdate = datetime.strptime(birthdate_input, "%Y-%m-%d")
+
+# Calculate the exact age
+years, months, days = calculate_age(birthdate)
+
+# Output the result
+print(f"You are {years} years, {months} months, and {days} days old.")
